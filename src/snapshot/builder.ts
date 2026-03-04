@@ -251,7 +251,7 @@ function buildCssSelector(
   let segment: string;
   if (attrs.class) {
     const classes = attrs.class.trim().split(/\s+/).slice(0, 2).map(c => `.${c}`).join('');
-    segment = `${tag}${classes}`;
+    segment = `${tag}${classes}:nth-child(${childIndex + 1})`;
   } else {
     // nth-child is 1-based in CSS
     segment = `${tag}:nth-child(${childIndex + 1})`;
