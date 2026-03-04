@@ -1,3 +1,9 @@
+---
+name: agent-miniprogram
+description: Use when the user needs to test, explore, or debug a WeChat miniprogram through the agent-mp CLI and WeChat Developer Tools automation daemon.
+allowed-tools: Bash(agent-mp:*), Bash(npx tsx:*), Bash(npm run daemon*)
+---
+
 # Agent Miniprogram — Claude Code Skill
 
 ## Trigger Conditions
