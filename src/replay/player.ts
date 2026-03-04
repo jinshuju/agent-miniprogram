@@ -2,6 +2,12 @@ import * as fs from 'fs';
 import { rpc } from '../daemon/client.js';
 import type { AmpFile } from './recorder.js';
 
+const REF_METHODS = new Set(['tap', 'input', 'scroll', 'longPress', 'swipe']);
+
+function usesRef(params: any): boolean {
+  return typeof params?.ref === 'string' && params.ref.startsWith('@');
+}
+
 export async function replay(filePath: string, opts: { port?: number } = {}) {
   const port = opts.port || 9430;
 
@@ -23,6 +29,11 @@ export async function replay(filePath: string, opts: { port?: number } = {}) {
       if (delay > 50) {
         await new Promise(r => setTimeout(r, delay));
       }
+    }
+
+    // Auto-snapshot before ref-based actions to rebuild ref registry
+    if (REF_METHODS.has(action.method) && usesRef(action.params)) {
+      await rpc('snapshot', {}, port);
     }
 
     console.log(`  [${i + 1}/${amp.actions.length}] ${action.method}`);

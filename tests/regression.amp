@@ -1,0 +1,168 @@
+{
+  "version": "1",
+  "createdAt": "2026-03-04T06:48:13.040Z",
+  "actions": [
+    {
+      "method": "navigate",
+      "params": {
+        "url": "/pages/index/index",
+        "type": "switchTab"
+      },
+      "timestamp": 7570
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 16443
+    },
+    {
+      "method": "navigate",
+      "params": {
+        "url": "/pages/notification/index",
+        "type": "switchTab"
+      },
+      "timestamp": 17416
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 27308
+    },
+    {
+      "method": "navigate",
+      "params": {
+        "url": "/pages/profile/show",
+        "type": "switchTab"
+      },
+      "timestamp": 28238
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 36996
+    },
+    {
+      "method": "navigate",
+      "params": {
+        "url": "/pages/template-home/index",
+        "type": "switchTab"
+      },
+      "timestamp": 37957
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 46063
+    },
+    {
+      "method": "tap",
+      "params": {
+        "ref": "@e13"
+      },
+      "timestamp": 54167
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 1000
+      },
+      "timestamp": 59752
+    },
+    {
+      "method": "back",
+      "params": {},
+      "timestamp": 61237
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 70134
+    },
+    {
+      "method": "navigate",
+      "params": {
+        "url": "/pages/index/index",
+        "type": "switchTab"
+      },
+      "timestamp": 71103
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 81320
+    },
+    {
+      "method": "tap",
+      "params": {
+        "ref": "@e15"
+      },
+      "timestamp": 87530
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 1000
+      },
+      "timestamp": 93561
+    },
+    {
+      "method": "input",
+      "params": {
+        "ref": "@e13",
+        "text": "马里奥"
+      },
+      "timestamp": 100336
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 1000
+      },
+      "timestamp": 104943
+    },
+    {
+      "method": "back",
+      "params": {},
+      "timestamp": 106431
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 114214
+    },
+    {
+      "method": "navigate",
+      "params": {
+        "url": "/pages/my-fillings/index",
+        "type": "navigateTo"
+      },
+      "timestamp": 115208
+    },
+    {
+      "method": "wait",
+      "params": {
+        "ms": 500
+      },
+      "timestamp": 124082
+    },
+    {
+      "method": "back",
+      "params": {},
+      "timestamp": 125067
+    }
+  ]
+}
