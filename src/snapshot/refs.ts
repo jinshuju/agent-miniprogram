@@ -9,6 +9,7 @@ interface RefEntry {
   selector: string;
   tag: string;
   text?: string;
+  matchIndex?: number;
 }
 
 let registry: Map<string, RefEntry> = new Map();
@@ -46,13 +47,14 @@ export function clearRefs() {
 }
 
 export function registerRef(selector: string, tag: string, text?: string): string {
-  // Check if already registered
-  for (const [ref, entry] of registry) {
-    if (entry.selector === selector) return ref;
+  // Count how many times this selector has already been registered (for $$()[N] resolution)
+  let matchIndex = 0;
+  for (const [, entry] of registry) {
+    if (entry.selector === selector) matchIndex++;
   }
   counter++;
   const ref = `@e${counter}`;
-  registry.set(ref, { selector, tag, text });
+  registry.set(ref, { selector, tag, text, matchIndex });
   return ref;
 }
 
@@ -60,6 +62,14 @@ export function resolveRef(ref: string): string | undefined {
   if (!ref?.startsWith('@')) return undefined;
   loadRefs();
   return registry.get(ref)?.selector;
+}
+
+export function resolveRefFull(ref: string): { selector: string; matchIndex: number } | undefined {
+  if (!ref?.startsWith('@')) return undefined;
+  loadRefs();
+  const entry = registry.get(ref);
+  if (!entry) return undefined;
+  return { selector: entry.selector, matchIndex: entry.matchIndex ?? 0 };
 }
 
 export function getRefInfo(ref: string): RefEntry | undefined {

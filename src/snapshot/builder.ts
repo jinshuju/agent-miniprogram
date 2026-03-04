@@ -8,6 +8,22 @@ const LAST_SNAPSHOT_FILE = path.join(STATE_DIR, 'last-snapshot.txt');
 
 const LAYOUT_TAGS = new Set(['view', 'block', 'cover-view']);
 
+// Built-in WXML tags — anything else is a custom component.
+// Custom components get plain tag-name selectors (no :nth-child) because
+// the WeChat automator does not support :nth-child on custom component tags.
+const BUILT_IN_WXML_TAGS = new Set([
+  'view', 'scroll-view', 'swiper', 'swiper-item', 'movable-view', 'movable-area',
+  'cover-view', 'cover-image', 'icon', 'text', 'rich-text', 'progress',
+  'button', 'checkbox-group', 'checkbox', 'form', 'input', 'label',
+  'picker', 'picker-view', 'picker-view-column', 'radio-group', 'radio',
+  'slider', 'switch', 'textarea', 'navigator', 'functional-page-navigator',
+  'audio', 'camera', 'image', 'live-player', 'live-pusher', 'video',
+  'map', 'canvas', 'open-data', 'web-view', 'ad', 'official-account',
+  'block', 'page', 'template', 'slot', 'wxs',
+  'svg', 'path', 'circle', 'rect', 'line', 'polygon', 'polyline',
+  'ellipse', 'g', 'defs', 'use', 'symbol',
+]);
+
 const EVENT_PREFIXES = [
   'bindtap', 'bind:tap', 'catchtap', 'catch:tap',
   'bindinput', 'bind:input', 'bindchange', 'bind:change',
@@ -231,14 +247,16 @@ function isInteresting(node: WxmlNode): boolean {
 }
 
 /**
- * Build a CSS selector for this element.
+ * Build a CSS selector segment for this element.
  *
  * Priority:
- *   1. #id
- *   2. tag.class1.class2 (up to 2 classes)
- *   3. parentCssPath > tag:nth-child(n)
+ *   1. #id  — globally unique, always preferred
+ *   2. tag.class1.class2  — up to 2 classes; reliable across component boundaries
+ *   3. tag:nth-child(n)  — for built-in tags with no class
+ *   4. tag  — for custom components (no :nth-child; unsupported by WeChat automator)
  *
- * The result is stored in refs.json and used by the daemon with page.$().
+ * Selectors are stored in refs.json. Resolution in the daemon uses page.$() /
+ * element.$(), splitting at component boundaries as needed (see server.ts).
  */
 function buildCssSelector(
   tag: string,
@@ -251,10 +269,12 @@ function buildCssSelector(
   let segment: string;
   if (attrs.class) {
     const classes = attrs.class.trim().split(/\s+/).slice(0, 2).map(c => `.${c}`).join('');
-    segment = `${tag}${classes}:nth-child(${childIndex + 1})`;
-  } else {
-    // nth-child is 1-based in CSS
+    segment = `${tag}${classes}`;
+  } else if (BUILT_IN_WXML_TAGS.has(tag)) {
     segment = `${tag}:nth-child(${childIndex + 1})`;
+  } else {
+    // Custom component: :nth-child is unsupported by the WeChat automator; use tag name only.
+    segment = tag;
   }
 
   return parentCss ? `${parentCss} > ${segment}` : segment;

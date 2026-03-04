@@ -107,12 +107,12 @@ describe('snapshot rendering', () => {
     clearRefs();
   });
 
-  it('assigns sequential refs', () => {
+  it('assigns sequential refs, tracking matchIndex for duplicates', () => {
     const r1 = registerRef('.btn', 'button', 'Login');
     const r2 = registerRef('.input', 'input');
-    const r3 = registerRef('.btn', 'button', 'Login'); // same selector
+    const r3 = registerRef('.btn', 'button', 'Login'); // same selector — gets its own ref
     expect(r1).toBe('@e1');
     expect(r2).toBe('@e2');
-    expect(r3).toBe('@e1'); // deduplicated
+    expect(r3).toBe('@e3'); // unique ref, resolved via page.$$()[1]
   });
 });
