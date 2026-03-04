@@ -4,61 +4,35 @@ A CLI tool for AI-driven WeChat miniprogram automation testing. Designed for use
 
 Inspired by [Agent Browser](https://github.com/vercel/agent-browser) (ref system, token-efficient snapshots) and [Agent Device](https://github.com/callstack/agent-device) (daemon architecture, SKILL.md, .amp recordings).
 
-## Architecture
+## Install
 
-```
-agent-mp <command>
-    │
-    ▼ HTTP POST /rpc (localhost:9430)
-┌─────────────────────────┐
-│   Daemon (Node.js)       │  ~/.agent-miniprogram/daemon.json
-│   - session state        │  ~/.agent-miniprogram/refs.json
-│   - ref registry         │
-└─────────┬───────────────┘
-          │ WebSocket
-          ▼
-  微信开发者工具 (miniprogram-automator)
-          │
-          ▼
-    小程序（模拟器）
+```bash
+npm install -g agent-miniprogram
 ```
 
-## Setup
-
-### Prerequisites
+## Prerequisites
 
 1. [WeChat Developer Tools](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) installed
 2. In Developer Tools: **Settings → Security → Enable CLI/HTTP calls**
 3. Node.js 18+
 
-### Install
+## Quick Start
 
 ```bash
-npm install
-```
+# Start the daemon
+agent-mp daemon
 
-### Start Daemon
-
-```bash
-npm run daemon
-# or
-npx tsx src/daemon/server.ts
-```
-
-### Basic Usage
-
-```bash
 # Launch DevTools and connect
-npx tsx src/cli.ts launch /path/to/miniprogram
+agent-mp launch /path/to/miniprogram
 
 # Get snapshot (ref-annotated WXML tree)
-npx tsx src/cli.ts snapshot
+agent-mp snapshot
 
 # Tap an element by ref
-npx tsx src/cli.ts tap @e5
+agent-mp tap @e5
 
 # Type into an input
-npx tsx src/cli.ts input @e3 "13800138000"
+agent-mp input @e3 "13800138000"
 ```
 
 ## Snapshot Format
@@ -113,13 +87,40 @@ See [skills/agent-miniprogram/SKILL.md](skills/agent-miniprogram/SKILL.md) for t
 
 Copy or symlink `skills/agent-miniprogram/SKILL.md` to your Claude Code skills directory, or reference it in your project's `CLAUDE.md`.
 
-## Testing
+## Development
+
+```
+agent-mp <command>
+    │
+    ▼ HTTP POST /rpc (localhost:9430)
+┌─────────────────────────┐
+│   Daemon (Node.js)       │  ~/.agent-miniprogram/daemon.json
+│   - session state        │  ~/.agent-miniprogram/refs.json
+│   - ref registry         │
+└─────────┬───────────────┘
+          │ WebSocket
+          ▼
+  微信开发者工具 (miniprogram-automator)
+          │
+          ▼
+    小程序（模拟器）
+```
 
 ```bash
+git clone https://github.com/michaelneale/agent-miniprogram
+cd agent-miniprogram
+npm install
+
+# Start daemon (dev mode)
+npm run daemon
+# or
+npx tsx src/daemon/server.ts
+
+# Run tests
 npm test
 ```
 
-## File Paths
+### File Paths
 
 - `~/.agent-miniprogram/daemon.json` — daemon runtime state
 - `~/.agent-miniprogram/refs.json` — element ref registry
