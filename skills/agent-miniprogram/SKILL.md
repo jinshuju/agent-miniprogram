@@ -18,8 +18,8 @@ Use this skill when asked to:
 
 The tool requires:
 1. WeChat Developer Tools installed, with "Security Settings → Enable HTTP Calls" turned on
-2. The daemon running: `npx tsx /path/to/agent-miniprogram/src/daemon/server.ts`
-   - Or: `cd agent-miniprogram && npm run daemon`
+2. The daemon running: `agent-mp daemon`
+   - Or if running from source: `npm run daemon`
 
 All commands communicate with the daemon via HTTP at `localhost:9430`.
 

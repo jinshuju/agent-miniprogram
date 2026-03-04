@@ -3,14 +3,33 @@
   "version": "0.1.0",
   "description": "CLI tool for AI-driven WeChat miniprogram automation testing",
   "type": "module",
+  "license": "MIT",
   "bin": {
-    "agent-mp": "./src/cli.ts"
+    "agent-mp": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "skills"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "automation",
+    "testing",
+    "cli",
+    "ai",
+    "agent"
+  ],
   "scripts": {
+    "build": "tsc",
     "start": "tsx src/cli.ts",
     "cli": "tsx src/cli.ts",
     "daemon": "tsx src/daemon/server.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
     "commander": "^12.0.0",
