@@ -176,7 +176,13 @@ async function handleRpc(method: string, params: any): Promise<any> {
     case 'navigate': {
       if (!mp) throw new Error('Not connected');
       const type = params.type || 'navigateTo';
-      await mp.navigateTo({ url: params.url });
+      if (type === 'switchTab') {
+        await mp.switchTab(params.url);
+      } else if (type === 'reLaunch') {
+        await mp.reLaunch(params.url);
+      } else {
+        await mp.navigateTo(params.url);
+      }
       return { ok: true, url: params.url };
     }
 
