@@ -1,0 +1,57 @@
+name: Bug report
+description: Report a reproducible problem with Agent Miniprogram
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: How can we reproduce the issue?
+      placeholder: |
+        1. Run `agent-mp ...`
+        2. Open ...
+        3. See ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Agent Miniprogram version
+      placeholder: "agent-mp --version"
+    validations:
+      required: false
+
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: "node -v"
+    validations:
+      required: false
+
+  - type: input
+    id: devtools
+    attributes:
+      label: WeChat Developer Tools version
+      placeholder: "Version shown in WeChat Developer Tools"
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste relevant logs. Remove credentials, tokens, private project code, and sensitive data.
+      render: text
+    validations:
+      required: false
