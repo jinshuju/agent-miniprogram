@@ -1,6 +1,18 @@
 # Agent Miniprogram
 
-A CLI tool for AI-driven WeChat miniprogram automation testing. Designed for use with AI agents like Claude Code.
+A CLI tool that helps AI agents test and operate WeChat Mini Programs. Designed for use with AI agents like Claude Code.
+
+## Who is this for?
+
+- Developers who build and test WeChat Mini Programs
+- Teams exploring AI-assisted UI testing for Mini Programs
+- AI agents that need a stable CLI interface for Mini Program snapshots and interactions
+
+## Project status
+
+This project is maintained by the Jinshuju team. It is suitable for internal automation, AI-assisted testing workflows, and early developer adoption.
+
+Issues and suggestions are welcome in this repository.
 
 Inspired by [Agent Browser](https://github.com/vercel/agent-browser) (ref system, token-efficient snapshots) and [Agent Device](https://github.com/callstack/agent-device) (daemon architecture, SKILL.md, .amp recordings).
 
@@ -39,7 +51,7 @@ agent-mp input @e3 "13800138000"
 
 `agent-mp snapshot` outputs a compact, ref-annotated tree (~200-400 tokens):
 
-```
+```text
 Page: /pages/index/index
 
 [view @e1]
@@ -89,7 +101,7 @@ Copy or symlink `skills/agent-miniprogram/SKILL.md` to your Claude Code skills d
 
 ## Development
 
-```
+```text
 agent-mp <command>
     │
     ▼ HTTP POST /rpc (localhost:9430)
@@ -97,17 +109,17 @@ agent-mp <command>
 │   Daemon (Node.js)       │  ~/.agent-miniprogram/daemon.json
 │   - session state        │  ~/.agent-miniprogram/refs.json
 │   - ref registry         │
-└─────────┬───────────────┘
-          │ WebSocket
-          ▼
+└────────┬────────────────┘
+         │ WebSocket
+         ▼
   微信开发者工具 (miniprogram-automator)
-          │
-          ▼
+         │
+         ▼
     小程序（模拟器）
 ```
 
 ```bash
-git clone https://github.com/michaelneale/agent-miniprogram
+git clone https://github.com/jinshuju/agent-miniprogram
 cd agent-miniprogram
 npm install
 
@@ -126,3 +138,7 @@ npm test
 - `~/.agent-miniprogram/refs.json` — element ref registry
 - `~/.agent-miniprogram/last-snapshot.txt` — last snapshot (for diff)
 - `~/.agent-miniprogram/screenshot.png` — default screenshot path
+
+## License
+
+MIT
